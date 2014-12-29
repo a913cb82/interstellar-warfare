@@ -1,0 +1,56 @@
+ISW-HL SYNTAX:
+incr VAR {x} {y}		-	var(x)=+y		(vartype 2)
+incr var {y}			-	var=+y			(vartype 1)
+set VAR {x} {y}			-	var(x)=y		(vartype 2)
+set var {y}				-	var=y			(vartype 1)
+var						-	used with maths symbols
+var {x}					-	used with maths symbols
+END						-	reset pointer, stop execution for turn
+HOME					-	compare with ctype
+CBLD					-	compare with ctype
+CPCN					-	compare with ctype
+CMOV					-	compare with ctype
+MOVE					-	compare with ctype
+MOV?					-	compare with ctype
+ifnot {cond} {body}		-	execute body if cond==0
+whilenot {cond} {body}	-	execute body while cond==0
+proc					-	execute command on sstar
+	build, newhome, chngpcnt, scrap
+proc {x}				-	move command from sstar to x, or dist between sstar and x
+	move, dist
+	
+VARTYPE 1
+	tinco , tshbl , tbsbl , trese, tship , tbase, pcnflt
+	strnpc, sbldpc, sresch, sstar, numcmd, home , tstar
+	play
+VARTYPE 2
+	ctype , cloca , ctime , cship , cdest , cdist	-	1-numcmd
+	cecnmc, cweapn, carmor, cengin
+	iowned, ibases, iincom, iships, itrnpc, ibldpc	-	1-tstar
+	iecnmc, iweapn, iarmor, iengin, iresch			
+	starx , stary , inhab , nohab , metal
+	var												-	0-15
+WRITEABLE VARS
+	sstar, pcnflt, strnpc, sbldpc, sresch
+	var												-	0-15
+
+#braces are not necessary if term inside is only 1 command
+
+
+whilenot 0 {
+	set sstar home
+	incr var 1
+	ifnot {var 1 < tstar} {set var 1 1}
+	move {var 1}
+}
+
+
+##1
+#sstar=home
+#var(1)=atkstar
+#move $var(1)
+#incr var(1)
+#var(1)>tstar jmp #2
+#jmp #1
+##2
+#var(1)=1
